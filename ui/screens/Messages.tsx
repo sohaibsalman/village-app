@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Text,
   TouchableOpacity,
@@ -6,13 +6,24 @@ import {
   View,
   FlatList,
 } from "react-native";
+import Modal from "react-native-modal";
+
 import { Message } from "../components";
 import DEMO from "../assets/data/demo";
 import styles from "../assets/styles";
 import UserAvatar from "../components/UserAvatar";
+import Chat from "./Chat";
 
-const Messages = () => (
-  <ImageBackground
+const Messages = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<string>('');
+
+  const onMessagePress = (userId: string) => {
+    setSelectedUser(userId.toString());
+    setShowModal(true);
+  }
+
+  return <ImageBackground
     source={require("../assets/images/bg.png")}
     style={styles.bg}
   >
@@ -41,7 +52,9 @@ const Messages = () => (
         data={DEMO}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            onMessagePress(item.id.toString())
+          }}>
             <Message
               image={item.image}
               name={item.name}
@@ -51,7 +64,20 @@ const Messages = () => (
         )}
       />
     </View>
+    <Modal
+      style={{ margin: 0 }}
+      propagateSwipe
+      isVisible={showModal}
+      backdropOpacity={0.5}
+      swipeDirection="down"
+      onSwipeComplete={() => setShowModal(false)}
+      onBackButtonPress={() => setShowModal(false)}
+    >
+      <Chat
+        userId={selectedUser}
+      />
+    </Modal>
   </ImageBackground>
-);
+};
 
 export default Messages;
