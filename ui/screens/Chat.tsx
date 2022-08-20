@@ -4,8 +4,10 @@ import { View } from "react-native";
 
 import ChatHeader from "../components/ChatHeader";
 import ChatFooter from "../components/ChatFooter";
-import DEMO from "../assets/data/demo";
+import ChatBody from "../components/ChatBody";
+import DEMO, { messageData } from "../assets/data/demo";
 import styles from "../assets/styles";
+import { ChatMessage } from "../types";
 
 interface IProps {
     userId: string
@@ -13,6 +15,8 @@ interface IProps {
 
 const Chat: React.FC<IProps> = ({ userId }) => {
     const selectedUser = DEMO.filter(x => x.id == Number(userId))[0];
+    const messages = messageData;
+
     return (
         <View
             style={styles.chatContainer}
@@ -21,8 +25,9 @@ const Chat: React.FC<IProps> = ({ userId }) => {
                 userImage={selectedUser.image}
                 userName={selectedUser.name}
             />
-            <View style={{ flex: 1 }}></View>
-
+            <ChatBody
+                messages={messageData}
+            />
             <ChatFooter />
         </View>
     );

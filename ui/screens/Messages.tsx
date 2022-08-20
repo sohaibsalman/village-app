@@ -69,8 +69,8 @@ const Messages = () => {
       propagateSwipe
       isVisible={showModal}
       backdropOpacity={0.5}
-      swipeDirection="down"
-      onSwipeComplete={() => setShowModal(false)}
+      // swipeDirection="down"
+      // onSwipeComplete={() => setShowModal(false)}
       onBackButtonPress={() => setShowModal(false)}
     >
       <Chat
