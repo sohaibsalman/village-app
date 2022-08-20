@@ -1,27 +1,40 @@
 import React from "react";
 import {
-  ScrollView,
   Text,
   TouchableOpacity,
   ImageBackground,
   View,
   FlatList,
 } from "react-native";
-import { Icon, Message } from "../components";
+import { Message } from "../components";
 import DEMO from "../assets/data/demo";
-import styles, { DARK_GRAY } from "../assets/styles";
+import styles from "../assets/styles";
+import UserAvatar from "../components/UserAvatar";
 
 const Messages = () => (
   <ImageBackground
     source={require("../assets/images/bg.png")}
     style={styles.bg}
   >
+    <View style={styles.top}>
+      <View style={{ flexDirection: 'column' }}>
+        <Text style={styles.title}>New Matches</Text>
+        <FlatList
+          data={DEMO}
+          keyExtractor={(item, index) => index.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => {
+            return <TouchableOpacity>
+              <UserAvatar image={item.image} name={item.name} />
+            </TouchableOpacity>
+          }}
+        />
+      </View>
+    </View>
     <View style={styles.containerMessages}>
-      <View style={styles.top}>
+      <View style={{ paddingTop: 25 }}>
         <Text style={styles.title}>Messages</Text>
-        <TouchableOpacity>
-          <Icon name="ellipsis-vertical" color={DARK_GRAY} size={20} />
-        </TouchableOpacity>
       </View>
 
       <FlatList

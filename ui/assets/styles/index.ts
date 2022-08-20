@@ -148,9 +148,9 @@ export default StyleSheet.create({
     width: DIMENSION_WIDTH - 100,
   },
   avatar: {
-    borderRadius: 30,
-    width: 60,
-    height: 60,
+    borderRadius: 50,
+    width: 70,
+    height: 70,
     marginRight: 20,
     marginVertical: 15,
   },
@@ -294,7 +294,7 @@ export default StyleSheet.create({
 
   // MENU
   tabButtonText: {
-    textTransform: "uppercase",
+    textTransform: "capitalize",
   },
   iconMenu: {
     alignItems: "center",
