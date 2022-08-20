@@ -9,6 +9,7 @@ import IMAGE_07 from "../images/07.jpg";
 import IMAGE_08 from "../images/08.jpg";
 import IMAGE_09 from "../images/09.jpg";
 import IMAGE_10 from "../images/10.jpg";
+import {ChatMessage} from "../../types";
 
 const data: DataT[] = [
   {
@@ -127,3 +128,37 @@ const data: DataT[] = [
 ];
 
 export default data;
+
+const messageData: ChatMessage[] = [
+  {
+    text: "Hi Jake, how are you? I noticed we both are working on a react native project!!!",
+    timestamp: new Date(),
+    isSent: true,
+  },
+  {
+    text: "Hey Peter, nice to meet you! Let's have a cup of coffee today?",
+    timestamp: new Date(),
+    isSent: false,
+  },
+  {
+    text: "Hey Peter, nice to meet you! Let's have a cup of coffee today?",
+    timestamp: new Date(),
+    isSent: true,
+  },
+  {
+    text: "Hey Peter, nice to meet you! Let's have a cup of coffee today?",
+    timestamp: new Date(),
+    isSent: true,
+  },
+  {
+    text: "Hey Peter, nice to meet you! Let's have a cup of coffee today?",
+    timestamp: new Date(),
+    isSent: true,
+  },
+  {
+    text: "Hey Peter, nice to meet you! Let's have a cup of coffee today?",
+    timestamp: new Date(),
+    isSent: true,
+  },
+]
+export {messageData};

@@ -299,4 +299,44 @@ export default StyleSheet.create({
   iconMenu: {
     alignItems: "center",
   },
+
+  // CHAT SCREEN
+  chatContainer: {
+    backgroundColor: WHITE,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    height: "85%",
+    marginTop: "auto",
+    paddingTop: "6%",
+    paddingHorizontal: "7%",
+  },
+
+  chatHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  messageBox: {
+    borderRadius: 20,
+    padding: 20,
+    marginTop: 10,
+    width: "70%",
+  },
+
+  sentMessage: {
+    alignSelf: "flex-end",
+    backgroundColor: PRIMARY_COLOR,
+  },
+
+  receivedMessage: {
+    backgroundColor: SECONDARY_COLOR,
+  },
+
+  selfAlignStart: {
+    alignSelf: "flex-start",
+  },
+
+  selfAlignEnd: {
+    alignSelf: "flex-end",
+  },
 });

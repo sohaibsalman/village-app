@@ -53,3 +53,9 @@ export type DataT = {
   info4?: string;
   location?: string;
 };
+
+export type ChatMessage = {
+  text: string,
+  isSent: boolean,
+  timestamp: Date,
+}
