@@ -6,6 +6,8 @@ export const WHITE = "#FFFFFF";
 export const GRAY = "#757E90";
 export const DARK_GRAY = "#363636";
 export const BLACK = "#000000";
+export const PURPLE = "#482399";
+export const LIGHTGRAY = "#cbcacc";
 
 export const ONLINE_STATUS = "#46A575";
 export const OFFLINE_STATUS = "#D04949";
