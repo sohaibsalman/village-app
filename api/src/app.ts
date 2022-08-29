@@ -1,8 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import "express-async-errors";
-import "dotenv/config";
 
+import { config } from "./config/config";
 import { signupRouter } from "./routes/auth/signup";
 import { signinRouter } from "./routes/auth/signin";
 import { NotFoundError } from "./errors/not-found-error";
@@ -34,8 +34,8 @@ const start = async () => {
     console.error(ex);
   }
 
-  app.listen(3000, () => {
-    console.log("Listening at port 3000");
+  app.listen(config.server.port, () => {
+    console.log(`Listening at port ${config.server.port}`);
   });
 };
 
