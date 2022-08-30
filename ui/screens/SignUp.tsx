@@ -1,22 +1,16 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React from "react";
 import {
     StyleSheet,
     Text,
     View,
     Image,
-    TextInput,
-    Button,
     TouchableOpacity,
 } from "react-native";
-import { BLACK, LIGHTGRAY, PURPLE, WHITE } from "../assets/styles";
+import { LIGHTGRAY, PURPLE, WHITE } from "../assets/styles";
 import { Icon } from "../components";
 
-
-export default function App() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
+const SignUp = () => {
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={require("./assets/images/logo1.png")} />
@@ -64,28 +58,23 @@ export default function App() {
                         }}
                     />
                 </View>
-
             </View>
-
             <View style={{ flexDirection: "row" }}>
                 <Icon name="logo-facebook" size={30} color={PURPLE} style={{ padding: 10, borderWidth: 1, borderRadius: 15, borderColor: LIGHTGRAY, marginRight: 10 }}></Icon>
                 <Icon name="logo-google" size={30} color={PURPLE} style={{ padding: 10, borderWidth: 1, borderRadius: 15, borderColor: LIGHTGRAY, marginRight: 10 }}></Icon>
                 <Icon name="logo-apple" size={30} color={PURPLE} style={{ padding: 10, borderWidth: 1, borderRadius: 15, borderColor: LIGHTGRAY, marginRight: 10 }}></Icon>
 
             </View>
-
             <View style={{ flexDirection: "row", position: "absolute", bottom: 0, marginBottom: 30 }}>
                 <Text style={{ marginRight: 40, color: PURPLE }}>Terms of Use</Text>
                 <Text style={{ color: PURPLE }}>Privacy Policy</Text>
 
             </View>
-
         </View>
-
-
-
     );
 }
+
+export default SignUp;
 
 const styles = StyleSheet.create({
     container: {
