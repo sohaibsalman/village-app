@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import {
@@ -7,21 +8,22 @@ import {
     Image,
     TouchableOpacity,
 } from "react-native";
-import { LIGHTGRAY, PURPLE, WHITE } from "../assets/styles";
-import { Icon } from "../components";
+import { LIGHTGRAY, PURPLE, WHITE } from "../../assets/styles";
+import { Icon } from "../../components";
 
 const SignUp = () => {
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={require("./assets/images/logo1.png")} />
+            <Image style={styles.image} source={require("../../assets/images/logo1.png")} />
             <Text style={{ fontWeight: "bold" }}>Sign up to continue</Text>
             <TouchableOpacity style={styles.loginBtn}>
                 <Text style={{ color: WHITE }}>Continue with email</Text>
             </TouchableOpacity>
             <StatusBar style="auto" />
 
-            <TouchableOpacity style={styles.loginPhone}>
-                <Text style={{ color: PURPLE }}>Continue with email</Text>
+            <TouchableOpacity style={styles.loginPhone} onPress={() => { navigation.navigate('Main') }}>
+                <Text style={{ color: PURPLE }}>Use phone number</Text>
             </TouchableOpacity>
 
             <View style={styles.signupLine}>
