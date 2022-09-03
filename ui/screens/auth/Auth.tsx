@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import SignUp from './SignUp';
 import EmailEntry from "./registration/EmailEntry";
+import VerificationCode from "./registration/VerificationCode";
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,11 @@ const Auth = () => {
       <Stack.Screen
         name="EmailEntryScreen"
         component={EmailEntry}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="VerificationCodeScreen"
+        component={VerificationCode}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

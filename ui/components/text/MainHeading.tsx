@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, TextProps } from "react-native";
 
-interface IProps {
+interface IProps extends TextProps {
   text: string;
 }
 
@@ -13,8 +13,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const MainHeading: React.FC<IProps> = ({ text }) => {
-  return <Text style={[styles.heading]}> {text} </Text>;
+const MainHeading: React.FC<IProps> = (props) => {
+  const { text } = props;
+  return <Text style={[styles.heading, props.style]}> {text} </Text>;
 };
 
 export default MainHeading;
