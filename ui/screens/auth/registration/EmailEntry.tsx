@@ -32,7 +32,7 @@ const EmailEntry = () => {
         text="Continue"
         style={{ marginTop: 70 }}
         onPress={() => {
-          navigator.navigate("Main");
+          navigator.navigate("VerificationCodeScreen");
         }}
       />
     </View>
