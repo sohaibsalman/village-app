@@ -12,7 +12,7 @@ interface IProps extends ViewProps {
 const styles = StyleSheet.create({
   button: {
     width: "100%",
-    borderRadius: 15,
+    borderRadius: 18,
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 20,

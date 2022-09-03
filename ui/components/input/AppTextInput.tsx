@@ -7,6 +7,12 @@ interface IProps extends TextInputProps {
   text?: string;
 }
 
+const AppTextInput: React.FC<IProps> = (props) => {
+  return <TextInput {...props} style={[styles.input, props.style]} />;
+};
+
+export default AppTextInput;
+
 const styles = StyleSheet.create({
   input: {
     borderColor: BORDER_LIGHT,
@@ -16,9 +22,3 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
 });
-
-const CustomTextInput: React.FC<IProps> = (props) => {
-  return <TextInput {...props} style={[styles.input, props.style]} />;
-};
-
-export default CustomTextInput;

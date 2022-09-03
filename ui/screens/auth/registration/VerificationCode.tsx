@@ -38,7 +38,7 @@ const VerificationCode = () => {
     }
 
     if (value.length === 3) {
-      navigator.navigate("Main");
+      navigator.navigate("ProfileDetailScreen");
     }
   };
 
