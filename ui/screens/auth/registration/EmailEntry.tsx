@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import styles, { TEXT_LIGHT } from "../../../assets/styles";
 import MainButton from "../../../components/buttons/MainButton";
-import CustomTextInput from "../../../components/input/CustomTextInput";
+import AppTextInput from "../../../components/input/AppTextInput";
 import MainHeading from "../../../components/text/MainHeading";
 
 const EmailEntry = () => {
@@ -19,7 +19,7 @@ const EmailEntry = () => {
         Please enter your valid email address. We will send you a 4-digit code
         to verify your account.
       </Text>
-      <CustomTextInput
+      <AppTextInput
         autoFocus
         autoComplete="email"
         autoCapitalize="none"

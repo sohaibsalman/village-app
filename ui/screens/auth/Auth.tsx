@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SignUp from './SignUp';
 import EmailEntry from "./registration/EmailEntry";
 import VerificationCode from "./registration/VerificationCode";
+import ProfileDetails from "./registration/ProfileDetails";
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,11 @@ const Auth = () => {
       <Stack.Screen
         name="VerificationCodeScreen"
         component={VerificationCode}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ProfileDetailScreen"
+        component={ProfileDetails}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
