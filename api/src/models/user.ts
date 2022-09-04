@@ -4,8 +4,13 @@ import { PasswordManager } from "../helpers/password-manager";
 
 // Interface representing the attributes required to create a new user
 interface UserAttributes {
-  email: string;
+  userId: string;
+  email?: string;
+  mobileNumber?: string;
   password: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
 }
 
 // Interace representing properties that a User Model has (User Collection)
@@ -15,17 +20,40 @@ interface UserModel extends mongoose.Model<UserDoc> {
 
 // Interface representing properties that a User Document has (single user)
 interface UserDoc extends mongoose.Document {
+  userId: string;
   email: string;
+  mobileNumber: string;
   password: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
 }
 
 const userSchema = new mongoose.Schema(
   {
-    email: {
+    userId: {
       type: String,
       required: true,
     },
+    email: {
+      type: String,
+    },
+    mobileNumber: {
+      type: String,
+    },
     password: {
+      type: String,
+      required: true,
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    dateOfBirth: {
       type: String,
       required: true,
     },
@@ -56,4 +84,4 @@ userSchema.statics.build = (attributes: UserAttributes) => {
 
 const User = mongoose.model<UserDoc, UserModel>("User", userSchema);
 
-export { User };
+export { User, UserAttributes };
