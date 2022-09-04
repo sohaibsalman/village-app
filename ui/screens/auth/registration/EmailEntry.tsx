@@ -20,11 +20,11 @@ const EmailEntry = () => {
         to verify your account.
       </Text>
       <AppTextInput
-        autoFocus
         autoComplete="email"
         autoCapitalize="none"
         keyboardType="email-address"
         placeholder="Enter your email here"
+        placeholderTextColor={TEXT_LIGHT}
         style={{ marginTop: 32 }}
         onChangeText={(text: string) => setEmail(text)}
       />
@@ -32,7 +32,7 @@ const EmailEntry = () => {
         text="Continue"
         style={{ marginTop: 70 }}
         onPress={() => {
-          navigator.navigate("VerificationCodeScreen");
+          navigator.navigate("PasswordEntryScreen");
         }}
       />
     </View>
