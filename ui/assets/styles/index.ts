@@ -10,6 +10,7 @@ export const PURPLE = "#482399";
 export const LIGHTGRAY = "#cbcacc";
 export const TEXT_LIGHT = "rgba(0, 0, 0, 0.7)";
 export const BORDER_LIGHT = "rgba(232, 230, 234, 1)";
+export const DANGER_COLOR = "#ff4444";
 
 export const ONLINE_STATUS = "#46A575";
 export const OFFLINE_STATUS = "#D04949";
