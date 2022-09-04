@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import Modal from "react-native-modal";
 import { Calendar } from "react-native-calendars";
 
@@ -9,16 +10,20 @@ import AppTextInput from "../../../components/input/AppTextInput";
 import MainButton from "../../../components/buttons/MainButton";
 import { Icon } from "../../../components";
 import TextButton from "../../../components/buttons/TextButton";
-import { useNavigation } from "@react-navigation/native";
+import { AuthStackParamList } from "../../../types";
 
 interface IProps {}
 
 const ProfileDetails: React.FC<IProps> = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState({});
-  const [dateOfBirth, setDateOfBirth] = useState("");
 
   const navigator = useNavigation();
+  const route =
+    useRoute<RouteProp<AuthStackParamList, "ProfileDetailScreen">>();
 
   const getSelectedDayEvents = (date: any) => {
     let markedDates: any = {};
@@ -28,6 +33,19 @@ const ProfileDetails: React.FC<IProps> = () => {
     };
     setDateOfBirth(date);
     setSelectedDate(markedDates);
+  };
+
+  const handleNextPress = () => {
+    const signupReq = {
+      userId: route.params.userId,
+      password: route.params.password,
+      email: route.params.email,
+      firstName,
+      lastName,
+      dateOfBirth,
+    };
+
+    console.log(signupReq);
   };
 
   return (
@@ -46,11 +64,15 @@ const ProfileDetails: React.FC<IProps> = () => {
         autoCapitalize="sentences"
         placeholder="First Name"
         style={{ marginTop: 32 }}
+        value={firstName}
+        onChangeText={(text: string) => setFirstName(text)}
       />
       <AppTextInput
         autoCapitalize="sentences"
         placeholder="Last Name"
         style={{ marginTop: 15 }}
+        value={lastName}
+        onChangeText={(text: string) => setLastName(text)}
       />
       <TouchableOpacity
         style={style.datePicker}
@@ -65,7 +87,7 @@ const ProfileDetails: React.FC<IProps> = () => {
       <MainButton
         text="Confirm"
         style={{ marginTop: "25%" }}
-        onPress={() => navigator.navigate("Main")}
+        onPress={handleNextPress}
       />
 
       <Modal

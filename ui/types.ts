@@ -59,3 +59,18 @@ export type ChatMessage = {
   isSent: boolean,
   timestamp: Date,
 }
+
+export type AuthStackParamList = {
+  SplashScreen: undefined;
+  SignupScreen: undefined;
+  LoginScreen: undefined;
+  EmailEntryScreen: undefined;
+  VerificationCodeScreen: { userId: string; email?: string; mobile?: string };
+  PasswordEntryScreen: { userId: string; email?: string; mobile?: string };
+  ProfileDetailScreen: {
+    userId: string;
+    password: string;
+    email?: string;
+    mobile?: string;
+  };
+};

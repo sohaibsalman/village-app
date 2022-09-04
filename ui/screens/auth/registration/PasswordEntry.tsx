@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -6,6 +6,7 @@ import { TEXT_LIGHT } from "../../../assets/styles";
 import MainButton from "../../../components/buttons/MainButton";
 import AppTextInput from "../../../components/input/AppTextInput";
 import MainHeading from "../../../components/text/MainHeading";
+import { AuthStackParamList } from "../../../types";
 
 interface IProps {}
 
@@ -14,9 +15,16 @@ const PasswordEntry: React.FC<IProps> = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigator = useNavigation();
+  const route =
+    useRoute<RouteProp<AuthStackParamList, "PasswordEntryScreen">>();
 
-  const handleContinuePress = () => {
-    navigator.navigate("VerificationCodeScreen");
+  const handleNextPress = () => {
+    const { userId, email } = route.params;
+    navigator.navigate("ProfileDetailScreen", {
+      userId,
+      email,
+      password,
+    });
   };
 
   return (
@@ -45,7 +53,7 @@ const PasswordEntry: React.FC<IProps> = () => {
       <MainButton
         text="Continue"
         style={{ marginTop: 70 }}
-        onPress={handleContinuePress}
+        onPress={handleNextPress}
       />
     </View>
   );
