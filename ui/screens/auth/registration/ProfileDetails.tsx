@@ -11,6 +11,8 @@ import MainButton from "../../../components/buttons/MainButton";
 import { Icon } from "../../../components";
 import TextButton from "../../../components/buttons/TextButton";
 import { AuthStackParamList } from "../../../types";
+import { http } from "../../../services/httpService";
+import { storeData } from "../../../services/localStorageService";
 
 interface IProps {}
 
@@ -35,7 +37,7 @@ const ProfileDetails: React.FC<IProps> = () => {
     setSelectedDate(markedDates);
   };
 
-  const handleNextPress = () => {
+  const handleNextPress = async () => {
     const signupReq = {
       userId: route.params.userId,
       password: route.params.password,
@@ -45,7 +47,13 @@ const ProfileDetails: React.FC<IProps> = () => {
       dateOfBirth,
     };
 
-    console.log(signupReq);
+    try {
+      const res = await http.post("api/users/signup", signupReq);
+      storeData("access_token", res.data.access_token);
+      navigator.navigate("Main");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
