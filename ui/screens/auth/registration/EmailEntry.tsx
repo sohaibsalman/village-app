@@ -12,6 +12,15 @@ const EmailEntry = () => {
 
   const navigator = useNavigation();
 
+  const handleNextPress = () => {
+    if (email.trim() !== "") {
+      navigator.navigate("VerificationCodeScreen", {
+        userId: email,
+        email,
+      });
+    }
+  };
+
   return (
     <View style={[styles.top, style.container]}>
       <MainHeading text="My email" />
@@ -20,20 +29,19 @@ const EmailEntry = () => {
         to verify your account.
       </Text>
       <AppTextInput
-        autoFocus
         autoComplete="email"
         autoCapitalize="none"
         keyboardType="email-address"
         placeholder="Enter your email here"
+        placeholderTextColor={TEXT_LIGHT}
         style={{ marginTop: 32 }}
+        value={email}
         onChangeText={(text: string) => setEmail(text)}
       />
       <MainButton
         text="Continue"
         style={{ marginTop: 70 }}
-        onPress={() => {
-          navigator.navigate("VerificationCodeScreen");
-        }}
+        onPress={handleNextPress}
       />
     </View>
   );

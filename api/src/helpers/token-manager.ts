@@ -8,7 +8,6 @@ export class TokenManager {
     const userJwt = jwt.sign(
       {
         id: user._id,
-        email: user.email,
       },
       "village_api_secret"
     );

@@ -1,14 +1,22 @@
 import React from "react";
-import { TextInput, StyleSheet, TextProps, TextInputProps } from "react-native";
+import { TextInput, StyleSheet, TextInputProps } from "react-native";
 
-import { BORDER_LIGHT } from "../../assets/styles";
+import { BORDER_LIGHT, TEXT_LIGHT } from "../../assets/styles";
 
 interface IProps extends TextInputProps {
   text?: string;
 }
 
 const AppTextInput: React.FC<IProps> = (props) => {
-  return <TextInput {...props} style={[styles.input, props.style]} />;
+  return (
+    <TextInput
+      {...props}
+      placeholderTextColor={
+        props.placeholderTextColor ? props.placeholderTextColor : TEXT_LIGHT
+      }
+      style={[styles.input, props.style]}
+    />
+  );
 };
 
 export default AppTextInput;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import {
   CodeField,
   Cursor,
@@ -9,13 +9,10 @@ import {
 } from "react-native-confirmation-code-field";
 import CountDown from "react-native-countdown-component";
 
+import styles, { PRIMARY_COLOR, TEXT_LIGHT } from "../../../assets/styles";
 import OnScreenKeyboard from "../../../components/on-screen-keyboard/OnScreenKeyboard";
 import TextButton from "../../../components/buttons/TextButton";
-import styles, {
-  PRIMARY_COLOR,
-  TEXT_LIGHT,
-  WHITE,
-} from "../../../assets/styles";
+import { AuthStackParamList } from "../../../types";
 
 const VerificationCode = () => {
   const [value, setValue] = useState("");
@@ -28,6 +25,8 @@ const VerificationCode = () => {
   });
 
   const navigator = useNavigation();
+  const route =
+    useRoute<RouteProp<AuthStackParamList, "VerificationCodeScreen">>();
 
   const handleKeyPress = (text: string) => {
     if (text.trim() !== "-") {
@@ -38,7 +37,11 @@ const VerificationCode = () => {
     }
 
     if (value.length === 3) {
-      navigator.navigate("ProfileDetailScreen");
+      const { userId, email } = route.params;
+      navigator.navigate("PasswordEntryScreen", {
+        userId,
+        email,
+      });
     }
   };
 

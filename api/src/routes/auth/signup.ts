@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
 
-import { User } from "../../models/user";
+import { User, UserAttributes } from "../../models/user";
 import { TokenManager } from "../../helpers/token-manager";
 import { validateRequest } from "../../middlewares/validate-request";
 import { BadRequestError } from "../../errors/bad-request-error";
@@ -19,14 +19,32 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, password }: { email: string; password: string } = req.body;
+    const {
+      userId,
+      email,
+      password,
+      mobileNumber,
+      firstName,
+      lastName,
+      dateOfBirth,
+    }: UserAttributes = req.body;
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({
+      $or: [{ email: userId }, { mobileNumber: userId }],
+    });
     if (existingUser) {
-      throw new BadRequestError("Email in use");
+      throw new BadRequestError("User already exists");
     }
 
-    const user = User.build({ email, password });
+    const user = User.build({
+      userId,
+      email,
+      password,
+      mobileNumber,
+      firstName,
+      lastName,
+      dateOfBirth,
+    });
     await user.save();
 
     const userJwt = TokenManager.generateJwtToken(user);

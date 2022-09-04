@@ -12,14 +12,16 @@ const router = express.Router();
 router.post(
   "/api/users/signin",
   [
-    body("email").isEmail().withMessage("Email is invalid"),
+    body("userId").notEmpty().withMessage("Invalid username"),
     body("password").notEmpty().withMessage("You must enter a passowrd"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { userId, password } = req.body;
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({
+      $or: [{ email: userId }, { mobileNumber: userId }],
+    });
     if (!existingUser) {
       throw new BadRequestError("Invalid Credentials");
     }

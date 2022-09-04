@@ -7,8 +7,10 @@ import VerificationCode from "./registration/VerificationCode";
 import ProfileDetails from "./registration/ProfileDetails";
 import SplashScreen from "./SplashScreen";
 import Login from "./Login";
+import PasswordEntry from "./registration/PasswordEntry";
+import { AuthStackParamList } from "../../types";
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<AuthStackParamList>();
 
 const Auth = () => {
   return (
@@ -31,6 +33,11 @@ const Auth = () => {
       <Stack.Screen
         name="EmailEntryScreen"
         component={EmailEntry}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PasswordEntryScreen"
+        component={PasswordEntry}
         options={{ headerShown: false }}
       />
       <Stack.Screen
