@@ -36,7 +36,7 @@ const EmailEntry = () => {
         placeholderTextColor={TEXT_LIGHT}
         style={{ marginTop: 32 }}
         value={email}
-        onChangeText={(text: string) => setEmail(text)}
+        onChangeText={(text: string) => setEmail(text.trim())}
       />
       <MainButton
         text="Continue"

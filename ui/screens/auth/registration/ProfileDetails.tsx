@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+} from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import Modal from "react-native-modal";
 import { Calendar } from "react-native-calendars";
@@ -11,8 +18,6 @@ import MainButton from "../../../components/buttons/MainButton";
 import { Icon } from "../../../components";
 import TextButton from "../../../components/buttons/TextButton";
 import { AuthStackParamList } from "../../../types";
-import { http } from "../../../services/httpService";
-import { storeData } from "../../../services/localStorageService";
 
 interface IProps {}
 
@@ -37,90 +42,93 @@ const ProfileDetails: React.FC<IProps> = () => {
     setSelectedDate(markedDates);
   };
 
-  const handleNextPress = async () => {
-    const signupReq = {
+  const handleNextPress = () => {
+    navigator.navigate("GenderEntryScreen", {
       userId: route.params.userId,
       password: route.params.password,
       email: route.params.email,
       firstName,
       lastName,
       dateOfBirth,
-    };
-
-    try {
-      const res = await http.post("api/users/signup", signupReq);
-      storeData("access_token", res.data.access_token);
-      navigator.navigate("Main");
-    } catch (error) {
-      console.error(error);
-    }
+    });
   };
 
   return (
     <View style={[styles.top, style.container]}>
-      <View style={style.skipButton}>
-        <TextButton text="Skip" onPress={() => navigator.navigate("Main")} />
-      </View>
-      <MainHeading text="Profile Details" />
-      <View style={style.userImageContainer}>
-        <Image
-          style={style.userImage}
-          source={require("../../../assets/images/05.jpg")}
-        />
-      </View>
-      <AppTextInput
-        autoCapitalize="sentences"
-        placeholder="First Name"
-        style={{ marginTop: 32 }}
-        value={firstName}
-        onChangeText={(text: string) => setFirstName(text)}
-      />
-      <AppTextInput
-        autoCapitalize="sentences"
-        placeholder="Last Name"
-        style={{ marginTop: 15 }}
-        value={lastName}
-        onChangeText={(text: string) => setLastName(text)}
-      />
-      <TouchableOpacity
-        style={style.datePicker}
-        activeOpacity={0.7}
-        onPress={() => setShowModal(true)}
+      <ScrollView
+        style={{ width: "100%" }}
+        showsVerticalScrollIndicator={false}
       >
-        <Icon name="calendar-outline" color={PRIMARY_COLOR} size={20} />
-        <Text style={style.datePickerText}>
-          {dateOfBirth ? dateOfBirth : "Choose birthday date"}
-        </Text>
-      </TouchableOpacity>
-      <MainButton
-        text="Confirm"
-        style={{ marginTop: "25%" }}
-        onPress={handleNextPress}
-      />
-
-      <Modal
-        style={style.modal}
-        propagateSwipe
-        isVisible={showModal}
-        backdropOpacity={0.5}
-        onBackButtonPress={() => setShowModal(false)}
-      >
-        <View style={style.modalContainer}>
-          <Calendar
-            hideDayNames
-            hideExtraDays
-            markedDates={selectedDate}
-            onDayPress={(date) => {
-              getSelectedDayEvents(date.dateString);
-            }}
-          />
-          <MainButton
-            text="Save"
-            style={{ marginTop: 20 }}
-            onPress={() => setShowModal(false)}
+        <View style={style.skipButton}>
+          <TextButton text="Skip" onPress={() => navigator.navigate("Main")} />
+        </View>
+        <MainHeading text="Profile Details" />
+        <View style={style.userImageContainer}>
+          <Image
+            style={style.userImage}
+            source={require("../../../assets/images/05.jpg")}
           />
         </View>
-      </Modal>
+        <AppTextInput
+          autoCapitalize="sentences"
+          placeholder="First Name"
+          style={{ marginTop: 32 }}
+          value={firstName}
+          onChangeText={(text: string) => setFirstName(text)}
+        />
+        <AppTextInput
+          autoCapitalize="sentences"
+          placeholder="Last Name"
+          style={{ marginTop: 15 }}
+          value={lastName}
+          onChangeText={(text: string) => setLastName(text)}
+        />
+        <TouchableOpacity
+          style={style.datePicker}
+          activeOpacity={0.7}
+          onPress={() => setShowModal(true)}
+        >
+          <Icon name="calendar-outline" color={PRIMARY_COLOR} size={20} />
+          <Text style={style.datePickerText}>
+            {dateOfBirth ? dateOfBirth : "Choose birthday date"}
+          </Text>
+        </TouchableOpacity>
+        <AppTextInput placeholder="Company Name" style={{ marginTop: 15 }} />
+        <AppTextInput placeholder="Company Website" style={{ marginTop: 15 }} />
+        <AppTextInput
+          placeholder="Linked in Profile"
+          style={{ marginTop: 15 }}
+        />
+        <MainButton
+          text="Confirm"
+          style={{ marginTop: "25%", marginBottom: "15%" }}
+          onPress={handleNextPress}
+        />
+
+        <Modal
+          style={style.modal}
+          propagateSwipe
+          isVisible={showModal}
+          backdropOpacity={0.5}
+          onBackButtonPress={() => setShowModal(false)}
+        >
+          <View style={style.modalContainer}>
+            <Calendar
+              hideDayNames
+              hideExtraDays
+              markedDates={selectedDate}
+              onDayPress={(date) => {
+                getSelectedDayEvents(date.dateString);
+              }}
+            />
+            <MainButton
+              text="Save"
+              style={{ marginTop: 20 }}
+              onPress={() => setShowModal(false)}
+            />
+          </View>
+        </Modal>
+      </ScrollView>
     </View>
   );
 };
@@ -129,6 +137,7 @@ export default ProfileDetails;
 
 const style = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: "column",
     alignItems: "flex-start",
     paddingHorizontal: 30,

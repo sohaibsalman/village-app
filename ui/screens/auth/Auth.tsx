@@ -9,6 +9,7 @@ import SplashScreen from "./SplashScreen";
 import Login from "./Login";
 import PasswordEntry from "./registration/PasswordEntry";
 import { AuthStackParamList } from "../../types";
+import GenderEntry from "./registration/GenderEntry";
 
 const Stack = createStackNavigator<AuthStackParamList>();
 
@@ -48,6 +49,11 @@ const Auth = () => {
       <Stack.Screen
         name="ProfileDetailScreen"
         component={ProfileDetails}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="GenderEntryScreen"
+        component={GenderEntry}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

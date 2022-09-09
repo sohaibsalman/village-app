@@ -73,4 +73,13 @@ export type AuthStackParamList = {
     email?: string;
     mobile?: string;
   };
+  GenderEntryScreen: {
+    userId: string;
+    password: string;
+    email?: string;
+    mobile?: string;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+  };
 };

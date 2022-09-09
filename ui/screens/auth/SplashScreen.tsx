@@ -15,9 +15,6 @@ const SplashScreen: React.FC<IProps> = () => {
 
   const validateLogin = async () => {
     const token = await getAuthToken();
-
-    console.log(token);
-
     if (token) {
       setIsLoggedIn(true);
       setTimeout(() => {
@@ -34,7 +31,7 @@ const SplashScreen: React.FC<IProps> = () => {
     <View style={[styles.top, style.container]}>
       <Image
         style={style.logo}
-        source={require("../../assets/images/logo1.png")}
+        source={require("../../assets/images/logo2.png")}
       />
       {isLoggedIn ? (
         <Text style={style.loadingText}>Loading...</Text>
