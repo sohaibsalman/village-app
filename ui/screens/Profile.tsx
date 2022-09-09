@@ -62,7 +62,7 @@ const Profile = () => {
                 </TouchableOpacity>
               }
             >
-              <MenuItem onPress={() => handleSignOut()}>Sign out</MenuItem>
+              <MenuItem onPress={handleSignOut}>Sign out</MenuItem>
             </Menu>
           </View>
         </ImageBackground>

@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { TEXT_LIGHT } from "../../../assets/styles";
 import MainButton from "../../../components/buttons/MainButton";
+import TextError from "../../../components/errors/textError";
 import AppTextInput from "../../../components/input/AppTextInput";
 import MainHeading from "../../../components/text/MainHeading";
 import { AuthStackParamList } from "../../../types";
@@ -13,12 +14,18 @@ interface IProps {}
 const PasswordEntry: React.FC<IProps> = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState(false);
 
   const navigator = useNavigation();
   const route =
     useRoute<RouteProp<AuthStackParamList, "PasswordEntryScreen">>();
 
   const handleNextPress = () => {
+    if (password.length < 4) {
+      setError(true);
+      return;
+    }
+
     const { userId, email } = route.params;
     navigator.navigate("ProfileDetailScreen", {
       userId,
@@ -50,6 +57,7 @@ const PasswordEntry: React.FC<IProps> = () => {
         value={confirmPassword}
         onChangeText={(text: string) => setConfirmPassword(text)}
       />
+      {error && <TextError text="Password must be atleast 4 characters" />}
       <MainButton
         text="Continue"
         style={{ marginTop: 70 }}
