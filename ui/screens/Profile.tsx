@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ScrollView,
   View,
@@ -6,22 +6,30 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
+import { Menu, MenuItem } from "react-native-material-menu";
+import { useNavigation } from "@react-navigation/native";
+
 import { Icon, ProfileItem } from "../components";
 import DEMO from "../assets/data/demo";
 import styles, { WHITE } from "../assets/styles";
+import { removeData } from "../services/localStorageService";
 
 const Profile = () => {
-  const {
-    age,
-    image,
-    info1,
-    info2,
-    info3,
-    info4,
-    location,
-    match,
-    name,
-  } = DEMO[7];
+  const [visible, setVisible] = useState(false);
+
+  const navigator = useNavigation();
+
+  const hideMenu = () => setVisible(false);
+  const showMenu = () => setVisible(true);
+
+  const handleSignOut = async () => {
+    await removeData("access_token");
+    hideMenu();
+    navigator.navigate("SplashScreen");
+  };
+
+  const { age, image, info1, info2, info3, info4, location, match, name } =
+    DEMO[7];
 
   return (
     <ImageBackground
@@ -40,14 +48,22 @@ const Profile = () => {
               />
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <Icon
-                name="ellipsis-vertical"
-                size={20}
-                color={WHITE}
-                style={styles.topIconRight}
-              />
-            </TouchableOpacity>
+            <Menu
+              visible={visible}
+              onRequestClose={hideMenu}
+              anchor={
+                <TouchableOpacity onPress={showMenu}>
+                  <Icon
+                    name="ellipsis-vertical"
+                    size={20}
+                    color={WHITE}
+                    style={styles.topIconRight}
+                  />
+                </TouchableOpacity>
+              }
+            >
+              <MenuItem onPress={() => handleSignOut()}>Sign out</MenuItem>
+            </Menu>
           </View>
         </ImageBackground>
 
