@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 
-import { LIGHTGRAY, PURPLE } from "../../assets/styles";
+import { LIGHTGRAY, PRIMARY_COLOR } from "../../assets/styles";
 import { Icon } from "../../components";
 import MainButton from "../../components/buttons/MainButton";
 import TextError from "../../components/errors/textError";
@@ -37,7 +37,7 @@ const Login = () => {
     <View style={styles.container}>
       <Image
         style={styles.image}
-        source={require("../../assets/images/logo1.png")}
+        source={require("../../assets/images/logo2.png")}
       />
       <Text style={{ fontWeight: "bold" }}>Login to continue</Text>
 
@@ -105,7 +105,7 @@ const Login = () => {
         <Icon
           name="logo-facebook"
           size={30}
-          color={PURPLE}
+          color={PRIMARY_COLOR}
           style={{
             padding: 10,
             borderWidth: 1,
@@ -117,7 +117,7 @@ const Login = () => {
         <Icon
           name="logo-google"
           size={30}
-          color={PURPLE}
+          color={PRIMARY_COLOR}
           style={{
             padding: 10,
             borderWidth: 1,
@@ -129,7 +129,7 @@ const Login = () => {
         <Icon
           name="logo-apple"
           size={30}
-          color={PURPLE}
+          color={PRIMARY_COLOR}
           style={{
             padding: 10,
             borderWidth: 1,
@@ -141,8 +141,8 @@ const Login = () => {
       </View>
 
       <View style={{ flexDirection: "row", bottom: 0, marginTop: 100 }}>
-        <Text style={{ marginRight: 40, color: PURPLE }}>Terms of Use</Text>
-        <Text style={{ color: PURPLE }}>Privacy Policy</Text>
+        <Text style={{ marginRight: 40, color: PRIMARY_COLOR }}>Terms of Use</Text>
+        <Text style={{ color: PRIMARY_COLOR }}>Privacy Policy</Text>
       </View>
     </View>
   );
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 40,
-    backgroundColor: PURPLE,
+    backgroundColor: PRIMARY_COLOR,
   },
 
   loginPhone: {
