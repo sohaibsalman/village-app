@@ -81,5 +81,9 @@ export type AuthStackParamList = {
     firstName: string;
     lastName: string;
     dateOfBirth: string;
+    address: string;
+    companyName: string;
+    companyWebsite: string;
+    linkedInProfile: string;
   };
 };
