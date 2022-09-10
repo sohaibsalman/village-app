@@ -32,6 +32,7 @@ const GenderEntry: React.FC<IProps> = () => {
       companyName: route.params.companyName,
       companyWebsite: route.params.companyWebsite,
       linkedInProfile: route.params.linkedInProfile,
+      avatar: route.params.avatar,
       gender,
       areasOfInterest: [],
     };
