@@ -1,49 +1,42 @@
-import mongoose from "mongoose";
+import mongoose, { Model, Types } from "mongoose";
 
 import { PasswordManager } from "../helpers/password-manager";
+import ICoordinates from "../interfaces/coordinates";
 
 // Interface representing the attributes required to create a new user
-interface UserAttributes {
+interface IUser {
+  _id: string;
   userId: string;
+  password: string;
+  avatar: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
   email?: string;
   mobileNumber?: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
+  gender: string;
+  companyName: string;
+  companyWebsite: string;
+  linkedInProfile: string;
+  areasOfInterest: Types.Array<string>;
+  address: string;
+  currentLocation?: ICoordinates;
+  createdAt: Date;
+  isActive: boolean;
 }
 
-// Interace representing properties that a User Model has (User Collection)
-interface UserModel extends mongoose.Model<UserDoc> {
-  build(attributes: UserAttributes): UserDoc;
-}
-
-// Interface representing properties that a User Document has (single user)
-interface UserDoc extends mongoose.Document {
-  userId: string;
-  email: string;
-  mobileNumber: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
-}
-
-const userSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema<IUser, Model<IUser>>(
   {
     userId: {
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-    },
-    mobileNumber: {
-      type: String,
-    },
     password: {
       type: String,
       required: true,
+    },
+    avatar: {
+      type: String,
     },
     firstName: {
       type: String,
@@ -56,6 +49,39 @@ const userSchema = new mongoose.Schema(
     dateOfBirth: {
       type: String,
       required: true,
+    },
+    email: {
+      type: String,
+    },
+    mobileNumber: {
+      type: String,
+    },
+    gender: {
+      type: String,
+    },
+    companyName: {
+      type: String,
+    },
+    companyWebsite: {
+      type: String,
+    },
+    linkedInProfile: {
+      type: String,
+    },
+    areasOfInterest: {
+      type: [String],
+    },
+    address: {
+      type: String,
+    },
+    currentLocation: {
+      type: { lat: Number, lng: Number },
+    },
+    createdAt: {
+      type: Date,
+    },
+    isActive: {
+      type: Boolean,
     },
   },
   {
@@ -78,10 +104,6 @@ userSchema.pre("save", async function (done) {
   done();
 });
 
-userSchema.statics.build = (attributes: UserAttributes) => {
-  return new User(attributes);
-};
+const User = mongoose.model("User", userSchema);
 
-const User = mongoose.model<UserDoc, UserModel>("User", userSchema);
-
-export { User, UserAttributes };
+export { User, IUser };

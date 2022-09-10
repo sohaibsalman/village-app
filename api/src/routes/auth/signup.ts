@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
 
-import { User, UserAttributes } from "../../models/user";
+import { User, IUser } from "../../models/user";
 import { TokenManager } from "../../helpers/token-manager";
 import { validateRequest } from "../../middlewares/validate-request";
 import { BadRequestError } from "../../errors/bad-request-error";
@@ -27,7 +27,14 @@ router.post(
       firstName,
       lastName,
       dateOfBirth,
-    }: UserAttributes = req.body;
+      address,
+      areasOfInterest,
+      avatar,
+      companyName,
+      companyWebsite,
+      gender,
+      linkedInProfile,
+    }: IUser = req.body;
 
     const existingUser = await User.findOne({
       $or: [{ email: userId }, { mobileNumber: userId }],
@@ -36,7 +43,7 @@ router.post(
       throw new BadRequestError("User already exists");
     }
 
-    const user = User.build({
+    const user = new User({
       userId,
       email,
       password,
@@ -44,6 +51,15 @@ router.post(
       firstName,
       lastName,
       dateOfBirth,
+      address,
+      areasOfInterest,
+      avatar,
+      companyName,
+      companyWebsite,
+      gender,
+      linkedInProfile,
+      createdAt: Date.now(),
+      isActive: true,
     });
     await user.save();
 
