@@ -14,15 +14,19 @@ interface IProps {}
 const PasswordEntry: React.FC<IProps> = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
   const navigator = useNavigation();
   const route =
     useRoute<RouteProp<AuthStackParamList, "PasswordEntryScreen">>();
 
   const handleNextPress = () => {
-    if (password.length < 4) {
-      setError(true);
+    const pass = password.trim();
+    if (pass.length < 4) {
+      setError("Password must be atleast 4 characters");
+      return;
+    } else if (pass !== confirmPassword.trim()) {
+      setError("Passwords do no match");
       return;
     }
 
@@ -42,6 +46,7 @@ const PasswordEntry: React.FC<IProps> = () => {
         contain a atleast one Capital Letter, Digit and Special Character
       </Text>
       <AppTextInput
+        autoCapitalize="none"
         style={{ marginTop: 32 }}
         placeholder="Enter your password here"
         placeholderTextColor={TEXT_LIGHT}
@@ -50,6 +55,7 @@ const PasswordEntry: React.FC<IProps> = () => {
         onChangeText={(text: string) => setPassword(text)}
       />
       <AppTextInput
+        autoCapitalize="none"
         style={{ marginTop: 15 }}
         placeholder="Enter your password again"
         placeholderTextColor={TEXT_LIGHT}
@@ -57,7 +63,7 @@ const PasswordEntry: React.FC<IProps> = () => {
         value={confirmPassword}
         onChangeText={(text: string) => setConfirmPassword(text)}
       />
-      {error && <TextError text="Password must be atleast 4 characters" />}
+      {error && <TextError text={error} />}
       <MainButton
         text="Continue"
         style={{ marginTop: 70 }}

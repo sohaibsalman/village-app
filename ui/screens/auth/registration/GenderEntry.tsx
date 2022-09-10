@@ -28,9 +28,13 @@ const GenderEntry: React.FC<IProps> = () => {
       firstName: route.params.firstName,
       lastName: route.params.lastName,
       dateOfBirth: route.params.dateOfBirth,
+      address: route.params.address,
+      companyName: route.params.companyName,
+      companyWebsite: route.params.companyWebsite,
+      linkedInProfile: route.params.linkedInProfile,
+      gender,
+      areasOfInterest: [],
     };
-
-    console.log(signupReq);
 
     try {
       const res = await http.post("api/users/signup", signupReq);

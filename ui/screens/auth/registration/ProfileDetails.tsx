@@ -18,6 +18,7 @@ import MainButton from "../../../components/buttons/MainButton";
 import { Icon } from "../../../components";
 import TextButton from "../../../components/buttons/TextButton";
 import { AuthStackParamList } from "../../../types";
+import ErrorMessage from "../../../components/errors/ErrorMessage";
 
 interface IProps {}
 
@@ -25,8 +26,14 @@ const ProfileDetails: React.FC<IProps> = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
+  const [address, setAddress] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [companyWebsite, setCompanyWebsite] = useState("");
+  const [linkedInProfile, setLinkedInProfile] = useState("");
+
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState({});
+  const [errors, setErrors] = useState<string[]>([]);
 
   const navigator = useNavigation();
   const route =
@@ -42,15 +49,54 @@ const ProfileDetails: React.FC<IProps> = () => {
     setSelectedDate(markedDates);
   };
 
+  const validate = (): boolean => {
+    let isValid = true;
+    const err = [];
+
+    if (firstName.trim().length === 0) {
+      err.push("First Name is required.");
+      isValid = false;
+    }
+    if (lastName.trim().length === 0) {
+      err.push("Last Name is required.");
+      isValid = false;
+    }
+    if (dateOfBirth.trim().length === 0) {
+      err.push("Date of Birth is required.");
+      isValid = false;
+    }
+    if (address.trim().length === 0) {
+      err.push("Address is required.");
+      isValid = false;
+    }
+    if (companyName.trim().length === 0) {
+      err.push("Company Name is required.");
+      isValid = false;
+    }
+    if (linkedInProfile.trim().length === 0) {
+      err.push("Linkedin Profile is required.");
+      isValid = false;
+    }
+
+    setErrors(isValid ? [] : err);
+    return isValid;
+  };
+
   const handleNextPress = () => {
-    navigator.navigate("GenderEntryScreen", {
-      userId: route.params.userId,
-      password: route.params.password,
-      email: route.params.email,
-      firstName,
-      lastName,
-      dateOfBirth,
-    });
+    if (validate()) {
+      navigator.navigate("GenderEntryScreen", {
+        userId: route.params.userId,
+        password: route.params.password,
+        email: route.params.email,
+        firstName,
+        lastName,
+        dateOfBirth,
+        address,
+        companyName,
+        companyWebsite,
+        linkedInProfile,
+      });
+    }
   };
 
   return (
@@ -93,12 +139,37 @@ const ProfileDetails: React.FC<IProps> = () => {
             {dateOfBirth ? dateOfBirth : "Choose birthday date"}
           </Text>
         </TouchableOpacity>
-        <AppTextInput placeholder="Company Name" style={{ marginTop: 15 }} />
-        <AppTextInput placeholder="Company Website" style={{ marginTop: 15 }} />
         <AppTextInput
+          placeholder="Full Address"
+          style={{ marginTop: 15 }}
+          value={address}
+          onChangeText={(text: string) => setAddress(text)}
+        />
+        <AppTextInput
+          placeholder="Company Name"
+          style={{ marginTop: 15 }}
+          value={companyName}
+          onChangeText={(text: string) => setCompanyName(text)}
+        />
+        <AppTextInput
+          autoCapitalize="none"
+          keyboardType="url"
+          placeholder="Company Website"
+          style={{ marginTop: 15 }}
+          value={companyWebsite}
+          onChangeText={(text: string) => setCompanyWebsite(text)}
+        />
+        <AppTextInput
+          autoCapitalize="none"
+          keyboardType="url"
           placeholder="Linked in Profile"
           style={{ marginTop: 15 }}
+          value={linkedInProfile}
+          onChangeText={(text: string) => setLinkedInProfile(text)}
         />
+
+        {errors.length > 0 && <ErrorMessage errors={errors} />}
+
         <MainButton
           text="Confirm"
           style={{ marginTop: "25%", marginBottom: "15%" }}

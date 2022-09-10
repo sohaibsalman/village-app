@@ -68,4 +68,20 @@ router.post(
   }
 );
 
+router.post(
+  "/api/users/validateUserId",
+  async (req: Request, res: Response) => {
+    const userId = req.body.userId;
+
+    const existingUser = await User.findOne({
+      $or: [{ email: userId }, { mobileNumber: userId }],
+    });
+    if (existingUser) {
+      throw new BadRequestError("User already exists");
+    }
+
+    res.status(200).send("OK");
+  }
+);
+
 export { router as signupRouter };
