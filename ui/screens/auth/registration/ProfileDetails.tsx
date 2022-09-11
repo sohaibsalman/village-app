@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -9,6 +8,7 @@ import {
 } from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import Modal from "react-native-modal";
+import * as ImagePicker from "expo-image-picker";
 import { Calendar } from "react-native-calendars";
 
 import styles, { PRIMARY_COLOR, WHITE } from "../../../assets/styles";
@@ -19,10 +19,26 @@ import { Icon } from "../../../components";
 import TextButton from "../../../components/buttons/TextButton";
 import { AuthStackParamList } from "../../../types";
 import ErrorMessage from "../../../components/errors/ErrorMessage";
+import AppImagePicker from "../../../components/input/AppImagePicker";
+import { http } from "../../../services/httpService";
 
 interface IProps {}
 
+declare global {
+  interface CustomFormDataValue {
+    uri: string | undefined;
+    name: string | undefined;
+    type: string;
+  }
+
+  interface FormData {
+    append(name: string, value: CustomFormDataValue, fileName?: string): void;
+    set(name: string, value: CustomFormDataValue, fileName?: string): void;
+  }
+}
+
 const ProfileDetails: React.FC<IProps> = () => {
+  const [avatar, setAvatar] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
@@ -30,6 +46,7 @@ const ProfileDetails: React.FC<IProps> = () => {
   const [companyName, setCompanyName] = useState("");
   const [companyWebsite, setCompanyWebsite] = useState("");
   const [linkedInProfile, setLinkedInProfile] = useState("");
+  const [image, setImage] = useState<ImagePicker.ImageInfo>();
 
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState({});
@@ -82,21 +99,48 @@ const ProfileDetails: React.FC<IProps> = () => {
     return isValid;
   };
 
-  const handleNextPress = () => {
+  const handleNextPress = async () => {
     if (validate()) {
-      navigator.navigate("GenderEntryScreen", {
-        userId: route.params.userId,
-        password: route.params.password,
-        email: route.params.email,
-        firstName,
-        lastName,
-        dateOfBirth,
-        address,
-        companyName,
-        companyWebsite,
-        linkedInProfile,
-      });
+      await uploadAvatar();
     }
+  };
+
+  const uploadAvatar = async () => {
+    if (image?.uri) {
+      const formData = new FormData();
+
+      let localUri = image.uri;
+      let filename = localUri.split("/").pop();
+      let match = /\.(\w+)$/.exec(filename!);
+      let type = match ? `image/${match[1]}` : `image`;
+
+      formData.append("avatar", { uri: localUri, name: filename, type });
+
+      try {
+        const result = await http.post("/api/profile/avatar", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        navigateToNextScreen(result.data);
+      } catch (error) {}
+    } else {
+      navigateToNextScreen("");
+    }
+  };
+
+  const navigateToNextScreen = (userAvatar: string) => {
+    navigator.navigate("GenderEntryScreen", {
+      userId: route.params.userId,
+      password: route.params.password,
+      email: route.params.email,
+      avatar: userAvatar,
+      firstName,
+      lastName,
+      dateOfBirth,
+      address,
+      companyName,
+      companyWebsite,
+      linkedInProfile,
+    });
   };
 
   return (
@@ -110,9 +154,9 @@ const ProfileDetails: React.FC<IProps> = () => {
         </View>
         <MainHeading text="Profile Details" />
         <View style={style.userImageContainer}>
-          <Image
-            style={style.userImage}
-            source={require("../../../assets/images/05.jpg")}
+          <AppImagePicker
+            imageUri={image?.uri}
+            onChangeImage={(result) => setImage(result)}
           />
         </View>
         <AppTextInput
@@ -167,15 +211,12 @@ const ProfileDetails: React.FC<IProps> = () => {
           value={linkedInProfile}
           onChangeText={(text: string) => setLinkedInProfile(text)}
         />
-
         {errors.length > 0 && <ErrorMessage errors={errors} />}
-
         <MainButton
           text="Confirm"
           style={{ marginTop: "25%", marginBottom: "15%" }}
           onPress={handleNextPress}
         />
-
         <Modal
           style={style.modal}
           propagateSwipe
