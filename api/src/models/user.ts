@@ -1,7 +1,7 @@
 import mongoose, { Model, Types } from "mongoose";
 
 import { PasswordManager } from "../helpers/password-manager";
-import ICoordinates from "../interfaces/coordinates";
+import ICoordinates from "../interfaces/ICoordinates";
 
 // Interface representing the attributes required to create a new user
 interface IUser {
@@ -75,7 +75,13 @@ const userSchema = new mongoose.Schema<IUser, Model<IUser>>(
       type: String,
     },
     currentLocation: {
-      type: { lat: Number, lng: Number },
+      type: {
+        type: String,
+        enum: ["Point"],
+      },
+      coordinates: {
+        type: [Number],
+      },
     },
     createdAt: {
       type: Date,
@@ -95,6 +101,8 @@ const userSchema = new mongoose.Schema<IUser, Model<IUser>>(
     },
   }
 );
+
+userSchema.index({ currentLocation: "2dsphere" });
 
 userSchema.pre("save", async function (done) {
   if (this.isModified("password")) {

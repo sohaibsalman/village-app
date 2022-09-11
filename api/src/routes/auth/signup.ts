@@ -58,6 +58,10 @@ router.post(
       companyWebsite,
       gender,
       linkedInProfile,
+      currentLocation: {
+        type: "Point",
+        coordinates: [1, 1],
+      },
       createdAt: Date.now(),
       isActive: true,
     });

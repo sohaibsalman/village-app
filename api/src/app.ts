@@ -11,6 +11,7 @@ import { errorHandler } from "./middlewares/error-handler";
 import { conversationRouter } from "./routes/chat/conversation";
 import { messagesRouter } from "./routes/chat/message";
 import { profileRouter } from "./routes/profile/profile";
+import { userRouter } from "./routes/user";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use("/static", express.static(path.join(__dirname, "uploads")));
 
 app.use(signupRouter);
 app.use(signinRouter);
+app.use(userRouter);
 app.use(conversationRouter);
 app.use(messagesRouter);
 app.use(profileRouter);
