@@ -30,10 +30,11 @@ const PasswordEntry: React.FC<IProps> = () => {
       return;
     }
 
-    const { userId, email } = route.params;
+    const { userId, email, mobile } = route.params;
     navigator.navigate("ProfileDetailScreen", {
       userId,
       email,
+      mobile,
       password,
     });
   };

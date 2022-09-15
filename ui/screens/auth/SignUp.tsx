@@ -33,7 +33,7 @@ const SignUp = () => {
       <TouchableOpacity
         style={styles.loginPhone}
         onPress={() => {
-          navigation.navigate("Main");
+          navigation.navigate("NumberEntryScreen");
         }}
       >
         <Text style={{ color: PRIMARY_COLOR }}>Use phone number</Text>

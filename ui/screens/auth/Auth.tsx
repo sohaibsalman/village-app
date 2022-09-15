@@ -10,6 +10,7 @@ import Login from "./Login";
 import PasswordEntry from "./registration/PasswordEntry";
 import { AuthStackParamList } from "../../types";
 import GenderEntry from "./registration/GenderEntry";
+import NumberEntry from "./registration/NumberEntry";
 
 const Stack = createStackNavigator<AuthStackParamList>();
 
@@ -34,6 +35,11 @@ const Auth = () => {
       <Stack.Screen
         name="EmailEntryScreen"
         component={EmailEntry}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NumberEntryScreen"
+        component={NumberEntry}
         options={{ headerShown: false }}
       />
       <Stack.Screen

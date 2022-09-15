@@ -24,7 +24,8 @@ const GenderEntry: React.FC<IProps> = () => {
     const signupReq = {
       userId: route.params.userId,
       password: route.params.password,
-      email: route.params.email,
+      email: route.params.email ? route.params.email : "",
+      mobileNumber: route.params.mobile ? route.params.mobile : "",
       firstName: route.params.firstName,
       lastName: route.params.lastName,
       dateOfBirth: route.params.dateOfBirth,

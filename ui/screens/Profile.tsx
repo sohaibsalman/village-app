@@ -23,9 +23,11 @@ const Profile = () => {
   const showMenu = () => setVisible(true);
 
   const handleSignOut = async () => {
-    await removeData("access_token");
+    const isRemoved = await removeData("access_token");
+    if (isRemoved) {
+      navigator.navigate("SplashScreen");
+    }
     hideMenu();
-    navigator.navigate("LoginScreen");
   };
 
   const { age, image, info1, info2, info3, info4, location, match, name } =

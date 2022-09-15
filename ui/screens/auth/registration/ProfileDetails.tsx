@@ -132,6 +132,7 @@ const ProfileDetails: React.FC<IProps> = () => {
       userId: route.params.userId,
       password: route.params.password,
       email: route.params.email,
+      mobile: route.params.mobile,
       avatar: userAvatar,
       firstName,
       lastName,
