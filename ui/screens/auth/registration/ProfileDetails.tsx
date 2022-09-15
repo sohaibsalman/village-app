@@ -21,6 +21,7 @@ import { AuthStackParamList } from "../../../types";
 import ErrorMessage from "../../../components/errors/ErrorMessage";
 import AppImagePicker from "../../../components/input/AppImagePicker";
 import { http } from "../../../services/httpService";
+import AppDropdown from "../../../components/input/AppDropdown";
 
 interface IProps {}
 
@@ -38,7 +39,6 @@ declare global {
 }
 
 const ProfileDetails: React.FC<IProps> = () => {
-  const [avatar, setAvatar] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
@@ -47,10 +47,21 @@ const ProfileDetails: React.FC<IProps> = () => {
   const [companyWebsite, setCompanyWebsite] = useState("");
   const [linkedInProfile, setLinkedInProfile] = useState("");
   const [image, setImage] = useState<ImagePicker.ImageInfo>();
+  const [joiningAnswer, setJoiningAnswer] = useState(
+    "Why did you join the Village App?"
+  );
+  const [showJoiningDd, setShowJoiningDd] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState({});
   const [errors, setErrors] = useState<string[]>([]);
+
+  const joiningQuestions = [
+    "Looking to connect with Founders",
+    "Looking to connect with Investors",
+    "Looking to connect with Engineers",
+    "I attended Founders Night!",
+  ];
 
   const navigator = useNavigation();
   const route =
@@ -144,6 +155,19 @@ const ProfileDetails: React.FC<IProps> = () => {
     });
   };
 
+  const handleShowJoiningDropdown = () => {
+    setShowJoiningDd(true);
+  };
+
+  const handleHideJoiningDropdown = () => {
+    setShowJoiningDd(false);
+  };
+
+  const handleJoiningDdSelection = (index: number) => {
+    setJoiningAnswer(joiningQuestions[index]);
+    setShowJoiningDd(false);
+  };
+
   return (
     <View style={[styles.top, style.container]}>
       <ScrollView
@@ -211,6 +235,15 @@ const ProfileDetails: React.FC<IProps> = () => {
           style={{ marginTop: 15 }}
           value={linkedInProfile}
           onChangeText={(text: string) => setLinkedInProfile(text)}
+        />
+        <AppDropdown
+          primaryText={joiningAnswer}
+          dropdownValues={joiningQuestions}
+          visible={showJoiningDd}
+          showMenu={handleShowJoiningDropdown}
+          hideMenu={handleHideJoiningDropdown}
+          onSelection={handleJoiningDdSelection}
+          styles={{ marginTop: 15 }}
         />
         {errors.length > 0 && <ErrorMessage errors={errors} />}
         <MainButton
