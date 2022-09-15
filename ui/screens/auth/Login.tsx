@@ -19,8 +19,8 @@ const Login = () => {
 
   const handleLoginPress = async () => {
     const request = {
-      userId,
-      password,
+      userId: userId.trim(),
+      password: password.trim(),
     };
 
     try {

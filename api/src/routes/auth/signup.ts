@@ -11,7 +11,6 @@ const router = express.Router();
 router.post(
   "/api/users/signup",
   [
-    body("email").isEmail().withMessage("Email is not valid"),
     body("password")
       .trim()
       .isLength({ min: 4, max: 20 })

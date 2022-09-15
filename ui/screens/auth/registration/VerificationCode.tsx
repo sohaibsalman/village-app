@@ -37,10 +37,11 @@ const VerificationCode = () => {
     }
 
     if (value.length === 3) {
-      const { userId, email } = route.params;
+      const { userId, email, mobile } = route.params;
       navigator.navigate("PasswordEntryScreen", {
         userId,
         email,
+        mobile,
       });
     }
   };

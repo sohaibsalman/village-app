@@ -14,11 +14,13 @@ const getData = async (key: string) => {
   } catch (e) {}
 };
 
-const removeData = async (key: string) => {
+const removeData = async (key: string): Promise<boolean> => {
   try {
     await AsyncStorage.removeItem(key);
+    return true;
   } catch (error) {
     console.error(error);
+    return false;
   }
 };
 

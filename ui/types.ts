@@ -65,6 +65,7 @@ export type AuthStackParamList = {
   SignupScreen: undefined;
   LoginScreen: undefined;
   EmailEntryScreen: undefined;
+  NumberEntryScreen: undefined;
   VerificationCodeScreen: { userId: string; email?: string; mobile?: string };
   PasswordEntryScreen: { userId: string; email?: string; mobile?: string };
   ProfileDetailScreen: {
