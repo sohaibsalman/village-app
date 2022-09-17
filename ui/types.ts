@@ -88,4 +88,19 @@ export type AuthStackParamList = {
     linkedInProfile: string;
     avatar: string;
   };
+  AreasOfInterestScreen: {
+    userId: string;
+    password: string;
+    email?: string;
+    mobile?: string;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    address: string;
+    companyName: string;
+    companyWebsite: string;
+    linkedInProfile: string;
+    avatar: string;
+    gender: string;
+  };
 };

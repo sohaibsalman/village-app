@@ -6,8 +6,6 @@ import styles from "../../../assets/styles";
 import MainButton from "../../../components/buttons/MainButton";
 import AppRadioItem from "../../../components/input/AppRadioItem";
 import MainHeading from "../../../components/text/MainHeading";
-import { http } from "../../../services/httpService";
-import { storeData } from "../../../services/localStorageService";
 import { AuthStackParamList } from "../../../types";
 
 interface IProps {}
@@ -20,12 +18,12 @@ const GenderEntry: React.FC<IProps> = () => {
   const navigator = useNavigation();
   const route = useRoute<RouteProp<AuthStackParamList, "GenderEntryScreen">>();
 
-  const handleNextPress = async () => {
-    const signupReq = {
+  const handleNextPress = () => {
+    navigator.navigate("AreasOfInterestScreen", {
       userId: route.params.userId,
       password: route.params.password,
       email: route.params.email ? route.params.email : "",
-      mobileNumber: route.params.mobile ? route.params.mobile : "",
+      mobile: route.params.mobile ? route.params.mobile : "",
       firstName: route.params.firstName,
       lastName: route.params.lastName,
       dateOfBirth: route.params.dateOfBirth,
@@ -35,16 +33,7 @@ const GenderEntry: React.FC<IProps> = () => {
       linkedInProfile: route.params.linkedInProfile,
       avatar: route.params.avatar,
       gender,
-      areasOfInterest: [],
-    };
-
-    try {
-      const res = await http.post("api/users/signup", signupReq);
-      storeData("access_token", res.data.access_token);
-      navigator.navigate("Main");
-    } catch (error) {
-      console.error(error);
-    }
+    });
   };
 
   return (
